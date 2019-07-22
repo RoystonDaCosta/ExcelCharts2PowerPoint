@@ -778,6 +778,10 @@ namespace ExcelCharts2Powerpoint
                 Verb = "open"
             });
         }
-        
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Developed by Royston DaCosta.\nIcon made by Pixel Perfect (https://www.flaticon.com/authors/pixel-perfect)  and\nSmashicons (https://www.flaticon.com/authors/smashicons)from www.flaticon.com");
+        }
     }
 }
