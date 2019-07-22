@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icons8-microsoft-excel-64.ico</ApplicationIcon>
+    <ApplicationIcon>convert.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="ExcelApi, Version=1.7.3.0, Culture=neutral, PublicKeyToken=26cf6d85ba68fa54, processorArchitecture=MSIL">
       <HintPath>..\packages\NetOffice.Excel.1.7.4.4\lib\net45\ExcelApi.dll</HintPath>
@@ -113,7 +114,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="convert.ico" />
     <Content Include="icons8-microsoft-excel-64.ico" />
+    <None Include="Resources\convert.png" />
+    <None Include="Resources\RenameExcel.JPG" />
+    <None Include="Resources\RenameExcel1.JPG" />
+    <None Include="Resources\RenamePowerPoint.JPG" />
     <None Include="Resources\powerpoint.png" />
     <None Include="Resources\folder.png" />
     <None Include="Resources\excel.png" />

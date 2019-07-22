@@ -26,6 +26,7 @@ namespace ExcelCharts2Powerpoint
 {
     public partial class Form1 : Form
     {
+        
         public Form1 thisForm;
         public Form1()
         {
@@ -40,6 +41,14 @@ namespace ExcelCharts2Powerpoint
                    .WriteTo.CustomSinkLogger()
                    .CreateLogger();
             CustomSink.instance.OnLogUpdate += Instance_OnLogUpdate;
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.pictureBox5);
+            pictureBox4.Hide();
+            pictureBox4.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox5.Hide();
+            pictureBox5.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox4.BringToFront();
+            pictureBox5.BringToFront();
         }
 
         private void Instance_OnLogUpdate(string logText)
@@ -140,14 +149,14 @@ namespace ExcelCharts2Powerpoint
                         if (shape.Name.Length > 1 && shape.Name.Substring(0, 1) == "#")
                         {
 
-                            if (excelShapesDictionary.ContainsKey(shape.Name))
+                            if (excelShapesDictionary.ContainsKey(shape.Name.ToLower().Trim()))
                             {
-                                Log.Error("\t\tSheet: {0} Shape Name : {1} Size(w x h) : {2} x {3} Position(left x top) : {4} , {5} Error!!! Shape with the same name exists", sheet.Name, shape.Name, sheet.Name, shape.Name, shape.Width, shape.Height, shape.Left, shape.Top);
+                                Log.Error("\t\tSheet: {0} Shape Name : {1} Error!!! Shape with the same name exists", sheet.Name, shape.Name,shape.Width, shape.Height, shape.Left, shape.Top);
                                 flagDouble = true;
                             }
                             else
                             {
-                                Log.Information("\tSheet: {0} Shape Name : {1} Size(w x h) : {2} x {3} Position(left x top) : {4} , {5}", sheet.Name, shape.Name, shape.Width, shape.Height, shape.Left, shape.Top);
+                                Log.Information("\tSheet: {0} Shape Name : {1} ", sheet.Name, shape.Name, shape.Width, shape.Height, shape.Left, shape.Top);
 
                                 excelShapesDictionary.Add(shape.Name.ToLower().Trim(), shape);
                             }
@@ -187,12 +196,12 @@ namespace ExcelCharts2Powerpoint
                             {
                                 if (!excelShapesDictionary.ContainsKey(shape.Name.ToLower().Trim()))
                                 {
-                                    Log.Information("\t\tData Missing for Slide No : {0} Shape Name : {1} Size(w x h) : {2} x {3} Position(left x top) : {4} , {5}", slide.SlideNumber, shape.Name, shape.Width, shape.Height, shape.Left, shape.Top);
+                                    Log.Information("\t\tData Missing for Slide No : {0} Shape Name : {1} ", slide.SlideNumber, shape.Name, shape.Width, shape.Height, shape.Left, shape.Top);
                                     datamissing = true;
                                 }
                                 else
                                 {
-                                    Log.Information("\tFound data for Slide No : {0} Shape Name : {1} Size(w x h) : {2} x {3} Position(left x top) : {4} , {5}", slide.SlideNumber, shape.Name, shape.Width, shape.Height, shape.Left, shape.Top);
+                                    Log.Information("\tFound data for Slide No : {0} Shape Name : {1} ", slide.SlideNumber, shape.Name, shape.Width, shape.Height, shape.Left, shape.Top);
 
                                 }
                                 if (!powerpointShapesSheetDictionary.ContainsKey(slide.SlideNumber))
@@ -771,17 +780,56 @@ namespace ExcelCharts2Powerpoint
             if ((attr & FileAttributes.Directory) != FileAttributes.Directory)
                 pathToOpen = Path.GetDirectoryName(pathToOpen);
 
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+            if (Directory.Exists(pathToOpen))
             {
-                FileName = pathToOpen,
-                UseShellExecute = true,
-                Verb = "open"
-            });
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                {
+                    FileName = pathToOpen,
+                    UseShellExecute = true,
+                    Verb = "open"
+                });
+            }
+            else MessageBox.Show("Directory not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Developed by Royston DaCosta.\nIcon made by Pixel Perfect (https://www.flaticon.com/authors/pixel-perfect)  and\nSmashicons (https://www.flaticon.com/authors/smashicons)from www.flaticon.com");
+            MessageBox.Show("Software developed by Royston DaCosta.\n\nIcon made by \nPixel Perfect (https://www.flaticon.com/authors/pixel-perfect)  \nSmashicons (https://www.flaticon.com/authors/smashicons) \nphoto3idea_studio (https://www.flaticon.com/authors/photo3idea-studio)\nfrom www.flaticon.com\n","Credits");
+        }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+           
+           pictureBox4.Visible = true;
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox4.Visible = false;
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            pictureBox4.Location = new System.Drawing.Point(Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y);
+
+        }
+
+        private void pictureBox2_MouseEnter(object sender, EventArgs e)
+        {
+
+            pictureBox5.Visible = true;
+        }
+
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
+
+            pictureBox5.Visible = false;
+        }
+
+        private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
+        {
+            pictureBox5.Location = new System.Drawing.Point(Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y);
+
         }
     }
 }
